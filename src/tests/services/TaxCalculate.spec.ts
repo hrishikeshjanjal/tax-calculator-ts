@@ -15,7 +15,7 @@ describe("TaxCalculator", () => {
     const receipt = taxCalculator.generateReceipt();
 
     expect(receipt).toBe(
-      "1 book: 137.49\n1 music CD: 164.99\n1 chocolate bar: 44.95\nTax: 31.60\nTotal: 347.43"
+      "1 book: 137.49\n1 music CD: 177.49\n1 chocolate bar: 72.43\nTax: 71.58\nTotal: 387.41"
     );
   });
 
@@ -27,7 +27,7 @@ describe("TaxCalculator", () => {
     const receipt = taxCalculator.generateReceipt();
 
     expect(receipt).toBe(
-      "1 book: 110.00\n1 food: 220.00\n1 medicine: 330.00\nTax: 60.00\nTotal: 660.00"
+      "1 book: 110.00\n1 food: 230.00\n1 medicine: 360.00\nTax: 100.00\nTotal: 700.00"
     );
   });
 
@@ -38,7 +38,7 @@ describe("TaxCalculator", () => {
     const receipt = taxCalculator.generateReceipt();
 
     expect(receipt).toBe(
-      "1 imported perfume: 287.50\n2 imported chocolates: 57.50\nTax: 52.50\nTotal: 402.50"
+      "1 imported perfume: 287.50\n2 imported chocolates: 95.00\nTax: 127.50\nTotal: 477.50"
     );
   });
 
@@ -57,5 +57,4 @@ describe("TaxCalculator", () => {
 
     expect(receipt).toBe("1 item: 14.29\nTax: 1.30\nTotal: 14.29");
   });
-
 });
