@@ -6,6 +6,7 @@ class TaxCalculator {
   private readonly ROUNDING_FACTOR: number = 0.05;
 
   private shoppingCart: Product[] = [];
+  private transactionTax: number = 0;
 
   public addItem(
     quantity: number,
@@ -22,18 +23,17 @@ class TaxCalculator {
     this.shoppingCart.push(product);
   }
 
-  public calculateTax(product: Product): number {
-    let tax: number = 0;
+  private calculateTax(product: Product): void {
     if (!this.isExempt(product.name)) {
-      tax += product.price * this.BASIC_TAX_RATE;
+      this.transactionTax += product.price * this.BASIC_TAX_RATE;
     }
+
     if (product.isImported) {
-      tax += product.price * this.IMPORT_DUTY_RATE;
+      this.transactionTax += product.price * this.IMPORT_DUTY_RATE;
     }
-    return this.roundTax(tax);
   }
 
-  public roundTax(tax: number): number {
+  private roundTax(tax: number): number {
     return Math.ceil(tax / this.ROUNDING_FACTOR) * this.ROUNDING_FACTOR;
   }
 
@@ -48,14 +48,15 @@ class TaxCalculator {
     let totalCost: number = 0;
 
     for (const product of this.shoppingCart) {
-      const itemTax: number = this.calculateTax(product);
-      const itemPriceWithTax: number = product.price + itemTax;
+      this.calculateTax(product);
+
+      const itemPriceWithTax: number = product.price + this.transactionTax;
       const itemTotalPrice: number = itemPriceWithTax * product.quantity;
 
       receipt += `${product.quantity} ${
         product.name
       }: ${itemPriceWithTax.toFixed(2)}\n`;
-      totalTax += itemTax * product.quantity;
+      totalTax += this.transactionTax * product.quantity;
       totalCost += itemTotalPrice;
     }
 
